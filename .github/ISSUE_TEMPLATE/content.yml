@@ -1,0 +1,23 @@
+name: 内容勘误或更新
+description: 报告具体段落、失效资料或规则变化
+title: "内容反馈："
+body:
+  - type: textarea
+    id: location
+    attributes:
+      label: 原文或页面位置
+      description: 写明页面链接、Markdown路径或具体段落。
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题与实际场景
+      description: 区分亲历、推断、教学模拟和未知；不要提交私人资料。
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: 原始来源与日期
+      description: 政策、平台资格、费用等变化请附官方来源和适用范围。

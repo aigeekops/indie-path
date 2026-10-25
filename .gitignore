@@ -1,0 +1,21 @@
+# Generated site and local review artifacts
+dist/
+generated/
+.local/
+screenshots/
+node_modules/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+# Local credentials are never site content
+.env
+.env.*
+!.env.example
+
+# Project-internal agent data is never part of the open-source release
+.workbuddy/
+
+# Local/internal work logs and design drafts are not part of the open-source release
+QA.md
+docs/

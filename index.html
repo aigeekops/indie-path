@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f1">
+  <meta name="description" content="独立之路是一份 AI 时代独立开发实践指南。从已有经验出发，在产品实践中补齐能力，用精选资源、真实反馈与经营记录，向个人盈利目标前进。">
+  <title>独立之路 · 借助 AI，把已有经验变成产品。</title>
+  <script src="./theme.js"></script>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="#/" aria-label="独立之路首页"><svg class="brand-mark" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#brand"/></svg><span>独立之路<small>INDIE PATH</small></span></a>
+    <nav aria-label="主导航"><a href="#/" data-nav="home">首页</a><a href="#/map" data-nav="map">行动地图</a><a href="#/route" data-nav="route">我的路线</a><a href="#/library" data-nav="library">实践指南</a></nav>
+    <a class="header-github" href="https://github.com/aigeekops/indie-path" target="_blank" rel="noopener noreferrer" aria-label="GitHub项目：aigeekops/indie-path，在新窗口打开">GitHub <svg class="icon" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#external"/></svg></a>
+    <button class="search-trigger" id="search-open"><svg class="icon" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#search"/></svg> 搜索问题、任务与资源 <kbd>/</kbd></button>
+    <a href="#/profile" class="button small dark header-cta">规划我的路线</a>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换到石墨黑"><svg class="icon theme-moon" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#moon"/></svg><svg class="icon theme-sun" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#sun"/></svg></button>
+    <button class="mobile-search" aria-label="搜索" id="mobile-search"><svg class="icon" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#search"/></svg></button>
+  </header>
+  <div id="global-route"></div>
+  <main id="app" tabindex="-1"></main>
+  <footer class="site-footer">
+    <section class="community-footer" aria-labelledby="community-title">
+      <div class="community-copy"><div class="eyebrow">LEARN. BUILD. SHARE.</div><h2 id="community-title">一起把想法，做成有人需要的产品。</h2><p>关注微信公众号 <strong>极客行动</strong>，继续交流AI工具、学习指南与独立产品实践。</p><a class="text-link" href="https://github.com/aigeekops/indie-path" target="_blank" rel="noopener noreferrer">GitHub项目 · aigeekops/indie-path <svg class="icon" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#external"/></svg></a><p class="quiet">查看项目，反馈问题，参与后续开源共建。</p></div>
+      <figure class="wechat-follow"><a href="./assets/wechat-qr.jpg" target="_blank" rel="noopener noreferrer" aria-label="打开极客行动微信公众号二维码大图"><img src="./assets/wechat-qr.jpg" alt="微信公众号极客行动的关注二维码" width="258" height="258" loading="lazy"></a><figcaption><strong>微信公众号 · 极客行动</strong><small>微信扫一扫，或保存二维码后在微信中识别</small></figcaption></figure>
+    </section>
+    <div class="footer-bottom"><a href="#/" class="footer-brand"><svg class="icon" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#brand"/></svg>独立之路</a><p>从你已有的经验出发，做出有人需要的产品。</p><p>纯静态学习网站 · 资料仅保存在本浏览器</p></div>
+  </footer>
+  <dialog id="search-dialog" aria-labelledby="search-title"><div class="search-head"><label id="search-title" for="search-input">搜索指南</label><button class="icon-button" id="search-close" aria-label="关闭搜索"><svg class="icon" aria-hidden="true" focusable="false"><use href="./assets/brand/icons.svg#close"/></svg></button></div><input id="search-input" placeholder="试试：不会后端、找用户、收费" autocomplete="off"><div id="search-results"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

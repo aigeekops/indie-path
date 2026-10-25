@@ -1,0 +1,29 @@
+{
+  "name": "indie-path",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "独立之路：从互联网从业者到独立开发者的纯静态实践指南",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aigeekops/indie-path.git"
+  },
+  "homepage": "https://aigeekops.github.io/indie-path/",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "check": "node scripts/check-site.mjs",
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "content": "node scripts/build-content.mjs",
+    "precheck": "npm run content",
+    "pretest": "npm run content",
+    "dev": "node scripts/dev.mjs"
+  },
+  "devDependencies": {
+    "markdown-it": "15.0.3",
+    "yaml": "2.9.1"
+  }
+}
