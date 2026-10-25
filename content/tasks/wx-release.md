@@ -1,6 +1,7 @@
 ---
 id: wx-release
 kind: task
+track: reference
 stage: delivery
 order: 49
 case_chapter: 4
@@ -39,6 +40,15 @@ step_readings:
 - 体验版本与正式版本
 - 隐私、类目及资格材料
 - 审核反馈与实际发布状态
+
+## 国内落地门槛
+
+- **提审前的资格与材料**：[小程序开放的服务类目](https://developers.weixin.qq.com/miniprogram/product/material/)决定你的功能能不能提交，先从这里倒推材料清单。
+- **做游戏的相关规定在[小游戏运营规范](https://developers.weixin.qq.com/minigame/product/)**，涉及虚拟道具、分享诱导的条目最容易卡住提交。
+- **知识产权材料提前准备**：若平台要求著作权材料，从[中国版权保护中心](https://www.ccopyright.com.cn/)当期页面核对口径，别等提审前一天才发现缺件。
+- **查完记三件事**：本次提交用了哪个类目、还需要补什么材料、最早什么时候能再提交。
+
+**失效信号**：类目表或运营规范更新、平台后台要求的材料与文档不一致、提审反馈提到文档里没有的条款。
 
 ## 行动步骤
 

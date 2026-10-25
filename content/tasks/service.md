@@ -1,6 +1,7 @@
 ---
 id: service
 kind: task
+track: reference
 stage: discovery
 order: 3
 case_chapter: 1

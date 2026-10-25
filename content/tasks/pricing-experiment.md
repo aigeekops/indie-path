@@ -1,6 +1,7 @@
 ---
 id: pricing-experiment
 kind: task
+track: reference
 stage: monetization
 order: 33
 case_chapter: 6
@@ -29,6 +30,15 @@ step_readings:
 - 价值与计费单位
 - 交付成本与利润边界
 - 报价反馈的证据等级
+
+## 国内落地门槛
+
+- **先确认计费方式本身允不允许**：虚拟商品与应用内购买在平台侧有明确约束，先读[App 审核指南（中文）](https://developer.apple.com/cn/app-store/review/guidelines/)的商业模式一节；微信侧同样要按[小游戏运营规范](https://developers.weixin.qq.com/minigame/product/)核对虚拟支付相关表述。
+- **免费试用＋自动续费的合法性**：能的实现前提是什么，以收款渠道当期支持的能力为准（[微信支付接入指引](https://pay.weixin.qq.com/static/applyment_guide/applyment_index.shtml)）。
+- **套餐如果是长期订阅**：同时核对开票与税负口径（见[中国内地税务专题](#/topic/cn-tax)），不要把"月付金额"直接当成实收。
+- **查完记三件事**：想测的计费方式、它在平台侧被允许或不允许的依据、页面查询日期。
+
+**失效信号**：平台对虚拟商品或订阅表述的条款更新、收款渠道能力变更、税率或开票规则调整。
 
 ## 行动步骤
 

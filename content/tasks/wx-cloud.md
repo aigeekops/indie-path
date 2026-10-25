@@ -1,6 +1,7 @@
 ---
 id: wx-cloud
 kind: task
+track: reference
 stage: delivery
 order: 48
 case_chapter: 3

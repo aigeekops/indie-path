@@ -1,6 +1,7 @@
 ---
 id: app-monetize
 kind: task
+track: reference
 stage: monetization
 order: 44
 case_chapter: 6
@@ -45,6 +46,16 @@ step_readings:
 - 产品形态与变现方式分别决定
 - 购买、订阅、广告与使用权益
 - 测试交易、退款、平台结算和实际收入
+
+## 国内落地门槛
+
+- **先分清变现走哪条路**：应用内购买、付费下载、广告，三者要求的资质和合同不同。苹果侧的约束先读[App 审核指南（中文）](https://developer.apple.com/cn/app-store/review/guidelines/)的商业模式一节。
+- **抽成决定到手多少**：符合条件与否看[小型企业计划](https://developer.apple.com/cn/app-store/small-business-program/)当期页面，比例与门槛以页面原文为准，不用转述的数字。
+- **安卓侧另有规则**：华为现有的内购链路与其他商店不一致，OPPO / vivo / 腾讯渠道分别见[OPPO](https://open.oppomobile.com/)、[vivo](https://dev.vivo.com.cn/)、[腾讯开放平台](https://open.tencent.com/)。
+- **国内用户的支付习惯**：除了应用内购买，是否需要配合第三方收款，看[收款方式专题](#/topic/payments)。
+- **查完记三件事**：我走哪条变现路径、平台抽成后到手多少、需要签哪些合同。
+
+**失效信号**：分成比例或计划门槛调整、内购条款更新、收款专题里的渠道规则变化。
 
 ## 行动步骤
 

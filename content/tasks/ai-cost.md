@@ -1,6 +1,7 @@
 ---
 id: ai-cost
 kind: task
+track: core
 stage: delivery
 order: 26
 case_chapter: 3

@@ -1,6 +1,7 @@
 ---
 id: segment
 kind: task
+track: core
 stage: discovery
 order: 20
 case_chapter: 1

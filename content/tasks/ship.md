@@ -1,6 +1,7 @@
 ---
 id: ship
 kind: task
+track: core
 stage: delivery
 order: 15
 case_chapter: 4

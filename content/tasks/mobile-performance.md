@@ -1,6 +1,7 @@
 ---
 id: mobile-performance
 kind: task
+track: reference
 stage: delivery
 order: 28
 case_chapter: 4

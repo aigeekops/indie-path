@@ -1,6 +1,7 @@
 ---
 id: search-demand
 kind: task
+track: reference
 stage: acquisition
 order: 30
 case_chapter: 5

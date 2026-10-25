@@ -27,10 +27,10 @@ test('公共地图与五类路线使用同一六阶段，每项任务仅归属�
 test('保存反馈同时改变地图推荐、阶段状态和自检数量，等待及停止不跳过',()=>{
  const profile=personas[0].profile,first=generateRoute(profile)[0];
  for(const decision of ['continue','adjust','observe','stop']){
-  const records={[first.id]:record(first,decision,{nextTask:'api'})};
+  const records={[first.id]:record(first,decision,{nextTask:'verify'})};
   const j=buildJourney({profile,records});
   assert.equal(j.completed,1);assert.equal(j.stages[0].completed,1);
-  if(decision==='adjust'){assert.equal(j.action.task.id,'api');assert.equal(j.stages[2].status,'调整后再验证');}
+  if(decision==='adjust'){assert.equal(j.action.task.id,'verify');assert.equal(j.stages[2].status,'调整后再验证');}
   if(['stop','observe'].includes(decision)){
    assert.equal(j.stages[0].current,true);assert.equal(j.stages[0].href,`#/task/${first.id}/acceptance`);
   }

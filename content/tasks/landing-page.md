@@ -1,6 +1,7 @@
 ---
 id: landing-page
 kind: task
+track: core
 stage: design
 order: 24
 case_chapter: 2

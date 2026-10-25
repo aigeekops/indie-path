@@ -1,6 +1,7 @@
 ---
 id: community-launch
 kind: task
+track: reference
 stage: acquisition
 order: 31
 case_chapter: 5

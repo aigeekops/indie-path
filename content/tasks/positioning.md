@@ -1,6 +1,7 @@
 ---
 id: positioning
 kind: task
+track: core
 stage: design
 order: 23
 case_chapter: 2

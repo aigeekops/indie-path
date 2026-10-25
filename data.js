@@ -22,35 +22,35 @@ export const personas=content.personas;
 // Markdown 是任务正文与验收标准的唯一来源；路线推荐仍是独立的网站逻辑。
 export const tasks=content.tasks.map(t=>({...t,steps:curriculum[t.id].practice.map(s=>s.title+'：'+s.action),resources:curriculum[t.id].readings,output:curriculum[t.id].deliverables.join('；')}));
 export const taskForProfile=(task,profile)=>mobileTask(marketTask(task,profile),profile);
+// 必修主干的顺序：一条从已有经验走到第一笔收入的最小闭环。
+export const CORE_TRACK=['find','segment','evidence','validation-experiment','cn-gates','scope','positioning','landing-page','price','web-basics','code-basics','ui','ai-cost','ai-evaluation','verify','usability','ship','reach','content-plan','charge','support','review','operate','content-review','prioritization'];
+// 选择了具体产品形态后，由平台专项关卡替代的通用必修项。
+const PLATFORM_REPLACE=['web-basics','code-basics','ui','verify','usability','ship','reach','charge','operate'];
+const platformBranch=p=>{
+ const wx=isWechat(p),game=isGame(p),cloud=mobileData(p)==='需要云端服务';
+ const ids=[wx?'wx-plan':'app-plan'];
+ if(game)ids.push('game-loop','game-build');else ids.push(wx?'wx-build':'app-build');
+ if(cloud)ids.push(wx?'wx-cloud':'app-cloud');
+ ids.push(wx?'wx-monetize':'app-monetize');
+ if(game)ids.push('game-test');
+ if(!wx)ids.push('app-test');
+ ids.push(wx?'wx-release':'app-release',wx?'wx-growth':'app-store-growth',wx?'wx-operations':'app-operations');
+ return ids;
+};
 export function generateRoute(profile,added=[]){
  const p={...blankProfile(),...profile,skills:{...blankProfile().skills,...profile.skills}};
  const first=p.stage==='live'?(p.used||p.paid?'review':'find'):p.stage==='none'||p.stage==='idea'?'find':'evidence';
- const ids=[first];
- if(p.serviceMode)ids.push('service');
- if(isMobile(p)){
-  ids.push('scope','app-plan');
-  if(isGame(p))ids.push('game-loop','game-build');else ids.push('app-build');
-  if(mobileData(p)==='需要云端服务')ids.push('app-cloud');
-  ids.push('app-monetize');
-  if(isGame(p))ids.push('game-test');
-  ids.push('app-test','app-release','app-store-growth','app-operations');
- }else if(isWechat(p)){
-  ids.push('scope','wx-plan');
-  if(isGame(p))ids.push('game-loop','game-build');else ids.push('wx-build');
-  if(mobileData(p)==='需要云端服务')ids.push('wx-cloud');
-  ids.push('wx-monetize');
-  if(isGame(p))ids.push('game-test');
-  ids.push('wx-release','wx-growth','wx-operations');
+ let ids;
+ if(isMobile(p)||isWechat(p)){
+  ids=CORE_TRACK.filter(id=>!PLATFORM_REPLACE.includes(id));
+  ids.splice(ids.indexOf('ai-evaluation')+1,0,...platformBranch(p));
  }else{
-  ids.push('scope','price');
   const needsBridge=['frontend','backend'].every(k=>p.skills[k]===0||p.skills[k]==='unknown');
-  if(needsBridge)ids.push('web-basics','code-basics');
-  ids.push('contract','api','ui','auth','verify','usability','ship','reach','charge','support','operate');
+  ids=CORE_TRACK.filter(id=>needsBridge||!['web-basics','code-basics'].includes(id));
  }
- const acquisitionIndex=ids.findIndex(id=>['reach','app-store-growth','wx-growth'].includes(id));
- ids.splice(acquisitionIndex+1,0,'content-plan');
- const operationsIndex=ids.findIndex(id=>['operate','app-operations','wx-operations'].includes(id));
- ids.splice(operationsIndex,0,'content-review');
+ ids=ids.filter(id=>id!==first);
+ ids.unshift(first);
+ if(p.serviceMode)ids.splice(ids.indexOf('evidence')+1,0,'service');
  for(const id of added)if(tasks.some(t=>t.id===id)&&!ids.includes(id))ids.push(id);
  return ids.map(id=>{
   const t=tasks.find(x=>x.id===id);let mode='required',reason='这是贯通产品与经营的必要实践。';

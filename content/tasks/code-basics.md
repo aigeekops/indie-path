@@ -1,6 +1,7 @@
 ---
 id: code-basics
 kind: task
+track: core
 stage: delivery
 order: 9
 case_chapter: 3

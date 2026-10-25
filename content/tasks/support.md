@@ -1,6 +1,7 @@
 ---
 id: support
 kind: task
+track: core
 stage: operations
 order: 18
 case_chapter: 7

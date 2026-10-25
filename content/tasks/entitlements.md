@@ -1,6 +1,7 @@
 ---
 id: entitlements
 kind: task
+track: reference
 stage: monetization
 order: 35
 case_chapter: 6

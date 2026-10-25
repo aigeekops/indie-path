@@ -1,6 +1,7 @@
 ---
 id: alternatives
 kind: task
+track: reference
 stage: discovery
 order: 21
 case_chapter: 1

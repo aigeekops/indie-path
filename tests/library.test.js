@@ -23,7 +23,7 @@ test('实践指南只有一套主任务目录，保留全部任务与原说明�
 test('搜索与六阶段筛选取交集，阶段数量随搜索更新，空结果可以清除条件',()=>{
  for(const stage of stages){
   const model=libraryModel({stage:stage.id});assert.equal(model.shown,stage.taskIds.length);
-  assert.deepEqual(model.groups.flatMap(s=>s.tasks.map(t=>t.id)),stage.taskIds);
+  assert.deepEqual(model.groups.flatMap(s=>s.tasks.map(t=>t.id)).sort(),stage.taskIds.slice().sort());
  }
  const query='接口',stage='delivery',model=libraryModel({query,stage});
  const expected=searchTasks(tasks,query).map(x=>x.task.id).filter(id=>stages.find(s=>s.id===stage).taskIds.includes(id));
@@ -32,6 +32,39 @@ test('搜索与六阶段筛选取交集，阶段数量随搜索更新，空结�
  const empty=libraryModel({query:'没有这个任务xyz'});assert.equal(empty.shown,0);
  assert.ok(libraryResults(empty).includes('id="library-reset"'));
  assert.ok(libraryPage({query:'"<script>'}).includes('&quot;&lt;script&gt;'));
+});
+
+test('目录区分必修与参考：必修排在前面，可按分级筛选',()=>{
+ const all=libraryModel({}),core=libraryModel({track:'core'}),reference=libraryModel({track:'reference'});
+ const coreTotal=tasks.filter(t=>t.track==='core').length,referenceTotal=tasks.filter(t=>t.track==='reference').length;
+ assert.ok(coreTotal>0&&referenceTotal>0);
+ assert.equal(core.shown,coreTotal);
+ assert.equal(reference.shown,referenceTotal);
+ assert.equal(core.shown+reference.shown,all.shown);
+ assert.equal(all.trackCounts.core,coreTotal);
+ assert.equal(all.trackCounts.reference,referenceTotal);
+ for(const group of all.groups){
+  const tracks=group.tasks.map(t=>t.track);
+  const firstReference=tracks.indexOf('reference');
+  assert.equal(firstReference===-1||tracks.lastIndexOf('core')<firstReference,true,group.id);
+ }
+ const html=libraryResults(all);
+ assert.ok(html.includes('catalog-task-track core'));
+ assert.ok(html.includes('catalog-task-track reference'));
+ assert.ok(libraryPage({}).includes('data-library-track="core"'));
+ assert.ok(libraryPage({}).includes('data-library-track="reference"'));
+ assert.ok(libraryPage({track:'core'}).includes('aria-pressed="true"'));
+});
+
+test('按需深入标明定位与适用场景，不与必修 / 参考混用同一套说法',()=>{
+ const html=libraryPage({});
+ assert.ok(html.includes('catalog-resources-note'));
+ assert.ok(html.includes('不是必修'));
+ for(const [href,when] of [['#/topics','要注册公司'],['#/cases','完整流程'],['#/sources','原始出处']]){
+  assert.ok(html.includes(`href="${href}"`),href);
+  assert.ok(html.includes(when),when);
+ }
+ assert.ok(!html.includes('公司、收款与财税专题 →'));
 });
 
 test('目录入口读取原草稿与当前验收条件，区分继续填写、已自检、待复核与卡点',()=>{

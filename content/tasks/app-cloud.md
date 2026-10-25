@@ -1,6 +1,7 @@
 ---
 id: app-cloud
 kind: task
+track: reference
 stage: delivery
 order: 40
 case_chapter: 3

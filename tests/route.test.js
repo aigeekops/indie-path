@@ -13,8 +13,8 @@ test('只修改岗位不改变路线和跳过建议',()=>{
 test('已有能力可验证跳过，未知能力保持待实践',()=>{
  const frontend=generateRoute(personas[2].profile);
  assert.equal(frontend.find(t=>t.id==='ui').mode,'confirm');
- assert.equal(frontend.find(t=>t.id==='auth').mode,'required');
- const p=blankProfile();assert.equal(generateRoute(p).find(t=>t.id==='api').mode,'required');
+ assert.equal(frontend.find(t=>t.id==='verify').mode,'required');
+ const p=blankProfile();assert.equal(generateRoute(p).find(t=>t.id==='ai-cost').mode,'required');
 });
 test('服务产品化依赖真实服务经历，不依赖运营岗位',()=>{
  assert.ok(generateRoute(personas[1].profile).some(t=>t.id==='service'));
@@ -22,7 +22,7 @@ test('服务产品化依赖真实服务经历，不依赖运营岗位',()=>{
  assert.ok(generateRoute({...personas[1].profile,roles:['后端']}).some(t=>t.id==='service'));
 });
 test('路线始终保留关键经营阶段，没有重复任务',()=>{
- for(const p of personas){const list=generateRoute(p.profile);assert.equal(new Set(list.map(t=>t.id)).size,list.length);for(const id of ['scope','auth','verify','charge','operate'])assert.ok(list.some(t=>t.id===id));}
+ for(const p of personas){const list=generateRoute(p.profile);assert.equal(new Set(list.map(t=>t.id)).size,list.length);for(const id of ['scope','price','verify','charge','operate'])assert.ok(list.some(t=>t.id===id));}
 });
 test('已有付费的用户不再收到未付费原因任务',()=>{
  const list=generateRoute({...personas[4].profile,paid:true});

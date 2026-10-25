@@ -1,6 +1,7 @@
 ---
 id: app-release
 kind: task
+track: reference
 stage: delivery
 order: 42
 case_chapter: 4
@@ -42,6 +43,20 @@ step_readings:
 - 签名、版本与发布包的可追溯性
 - 商店材料和审核所需信息
 - 驳回处理、正式可下载与版本核验
+
+## 国内落地门槛
+
+每个商店提交素材和资质都不同，**照抄别家清单是最常见的驳回原因**。
+
+- **逐商店查**：[OPPO](https://open.oppomobile.com/)、[vivo](https://dev.vivo.com.cn/)、[腾讯开放平台](https://open.tencent.com/)各自的上架要求分别查一遍
+- **苹果**：按[App 审核指南（中文）](https://developer.apple.com/cn/app-store/review/guidelines/)列出最可能被拒的三条理由
+- **著作权材料**：商店要求时用作主要凭证，口径以[中国版权保护中心](https://www.ccopyright.com.cn/)页面为准
+- **提供服务前提**：[App 相关备案](https://www.miit.gov.cn/)以工信部当期文件为准
+- **游戏另算**：若产品属于游戏类，还可能涉及额外审批；不确定就写"待确认"，不要用别人的个例推断
+
+**查完记三件事**：这次提交了哪几个商店、各自被要求补过什么材料、现在还有哪个商店没通。
+
+**失效信号**：商店审核规范更新、后台要求的新材料、著作权要求变化。
 
 ## 行动步骤
 

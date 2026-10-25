@@ -1,6 +1,7 @@
 ---
 id: evidence
 kind: task
+track: core
 stage: discovery
 order: 2
 case_chapter: 1

@@ -28,7 +28,7 @@ test('Markdown 修改进入构建数据和正文，保留任务 ID 与完成标�
 });
 
 test('经营专题可以搜索、填写独立草稿和查阅来源，不自动增加主线任务',()=>{
- assert.equal(content.stages.length,6);assert.equal(content.tasks.length,56);assert.equal(content.topics.length,9);
+ assert.equal(content.stages.length,6);assert.equal(content.tasks.length,57);assert.equal(content.topics.length,9);
  assert.ok(topicsPage().includes('#/topic/hk-registration'));
  assert.ok(searchTopics('香港 注册').some(x=>x.topic.id==='hk-registration'));
  assert.ok(searchTopics('报税').some(x=>x.topic.id==='cn-tax'));

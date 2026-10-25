@@ -1,6 +1,7 @@
 ---
 id: web-basics
 kind: task
+track: core
 stage: delivery
 order: 8
 case_chapter: 3

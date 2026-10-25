@@ -1,6 +1,7 @@
 ---
 id: content-plan
 kind: task
+track: core
 stage: acquisition
 order: 29
 case_chapter: 5

@@ -1,6 +1,7 @@
 ---
 id: wx-monetize
 kind: task
+track: reference
 stage: monetization
 order: 51
 case_chapter: 6
@@ -35,6 +36,15 @@ step_readings:
 - 收入方式与实际商品分别判断
 - 前端回调、可信状态与权益
 - 测试、预计收入和实际到账
+
+## 国内落地门槛
+
+- **交易类和广告类不是一回事**：交易走支付能力，广告走流量主/变现合作，两者要求的主体和材料不同。先看[微信支付接入指引](https://pay.weixin.qq.com/static/applyment_guide/applyment_index.shtml)确认交易侧的门槛。
+- **虚拟支付另有限制**：涉及虚拟道具、会员权益等，按[小游戏运营规范](https://developers.weixin.qq.com/minigame/product/)核对，不要沿用 App 的做法。
+- **做第二条收款备份**：同一笔生意考虑是否也要接[支付宝](https://open.alipay.com/)，把差异写进模板。
+- **查完记三件事**：本轮用交易还是广告、我走到哪一步、卡在哪个材料上。
+
+**失效信号**：支付或广告的准入条件调整、结算周期变化、费率公示更新。
 
 ## 行动步骤
 

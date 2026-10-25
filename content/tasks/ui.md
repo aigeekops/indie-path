@@ -1,6 +1,7 @@
 ---
 id: ui
 kind: task
+track: core
 stage: delivery
 order: 11
 case_chapter: 3

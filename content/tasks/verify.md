@@ -1,6 +1,7 @@
 ---
 id: verify
 kind: task
+track: core
 stage: delivery
 order: 13
 case_chapter: 4

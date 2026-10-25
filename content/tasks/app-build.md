@@ -1,6 +1,7 @@
 ---
 id: app-build
 kind: task
+track: reference
 stage: delivery
 order: 39
 case_chapter: 3

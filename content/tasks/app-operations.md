@@ -1,6 +1,7 @@
 ---
 id: app-operations
 kind: task
+track: reference
 stage: operations
 order: 45
 case_chapter: 7

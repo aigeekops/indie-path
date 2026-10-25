@@ -1,6 +1,7 @@
 ---
 id: review
 kind: task
+track: core
 stage: discovery
 order: 4
 case_chapter: 1

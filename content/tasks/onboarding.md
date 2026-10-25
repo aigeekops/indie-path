@@ -1,6 +1,7 @@
 ---
 id: onboarding
 kind: task
+track: reference
 stage: design
 order: 25
 case_chapter: 2

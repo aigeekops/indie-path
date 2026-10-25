@@ -19,6 +19,13 @@ export function learningContent(task,profile,records={},allTasks=[],{taskHref=id
  const stepReadings=Object.values(l.stepReadings||{}).flat();
  const additional=readings.slice(1).filter(r=>!stepReadings.some(source=>source.url===r.url&&source.chapter===r.chapter));
  const reading=(r,primary=false)=>`<article class="lesson-reading ${primary?'primary-reading':''}"><a href="${safe(r.url)}" class="lesson-reading-title" target="_blank" rel="noopener noreferrer">${safe(r.name)}${icon('external')}</a><dl><div><dt>看哪些</dt><dd>${r.chapterHtml||safe(r.chapter)}</dd></div><div><dt>读到能</dt><dd>${safe(r.goal)}</dd></div></dl>${r.access?`<p class="quiet">${safe(r.access)}</p>`:''}<small>核验 ${safe(r.checkedAt||businessCheckedAt)}</small>${r.note?`<details class="source-scope"><summary>查看核验范围</summary><div class="markdown-body">${r.noteHtml||safe(r.note)}</div></details>`:''}</article>`;
+ const copyButton=target=>`<button class="text-link" type="button" data-copy="${target}">${icon('copy')}复制</button>`;
+ const kit=!(l.starter||l.prompts||l.exemplar||l.aiBoundary?.length)?'':`<section class="starter-kit" aria-labelledby="starter-kit-title"><div class="starter-kit-heading"><h3 id="starter-kit-title">起步包：先拿到能动手的东西</h3><p class="quiet">下面是能直接复制走的材料。提示词按轮次给，别一次全贴；AI 边界写的是哪些判断不能交给它。</p></div>
+  ${l.starter?`<details class="starter-block" open><summary>可运行起点 / 直接开始的位置</summary><pre class="worksheet" id="starter-code">${safe(l.starter)}</pre>${copyButton('#starter-code')}</details>`:''}
+  ${l.prompts?`<details class="starter-block"><summary>AI 提示词包（可复制）</summary><pre class="worksheet" id="prompt-code">${safe(l.prompts)}</pre>${copyButton('#prompt-code')}</details>`:''}
+  ${l.exemplar?`<details class="starter-block"><summary>做成之后长什么样（成品样例）</summary><div class="markdown-body">${l.html.exemplar}</div></details>`:''}
+  ${l.aiBoundary?.length?`<div class="ai-boundary"><strong>AI 边界</strong><ul>${l.aiBoundary.map(safe).map(x=>`<li>${x}</li>`).join('')}</ul></div>`:''}
+ </section>`;
  const prerequisites=prerequisiteIds(task.id,profile);
  return `<div class="lesson-start"><strong>开始前</strong><div class="markdown-body">${l.html.prerequisite}</div>${prerequisites.length?`<details class="prerequisite-links"><summary>缺前置知识？按需补齐</summary>${prerequisites.map(id=>{const t=allTasks.find(x=>x.id===id);return `<a href="${taskHref(id)}">${safe(t?.title||id)} <small>${resultMatches(records[id],t)?'已保存成果，核对本次是否适用':'按缺口选读'}</small></a>`;}).join('')}</details>`:''}</div>
  ${mobilePlatformPanel(task,profile)}
@@ -30,6 +37,7 @@ export function learningContent(task,profile,records={},allTasks=[],{taskHref=id
  </div></details>
  <details class="task-section task-block " name="task-panels" id="practice" ${initialSection==='practice'?'open':''}><summary><span class="section-index">02</span><strong>按这个顺序做</strong><small>实践步骤</small></summary><div class="task-block-content">
   ${l.pathNote?`<div class="notice">${safe(l.pathNote)}</div>`:''}
+  ${kit}
   <ol class="lesson-action-steps">${l.practice.map((step,i)=>`<li><div class="lesson-step-heading"><span>${i+1}</span><h3>${safe(step.title)}</h3></div><div class="lesson-step-body">${l.stepReadings?.[step.title]?.length?`<div class="step-readings"><span>这一步用到</span>${l.stepReadings[step.title].map(r=>`<a href="${safe(r.url)}" target="_blank" rel="noopener noreferrer">${safe(r.name)}${icon('external')}<small>${safe(r.chapterText||r.chapter)}</small>${r.access?`<small>${safe(r.access)} · 核验 ${safe(r.checkedAt||businessCheckedAt)}</small>`:''}</a>`).join('')}</div>`:''}<div class="markdown-body">${step.actionHtml}</div><div class="lesson-step-output"><strong>留下</strong><div class="markdown-body">${step.resultHtml}</div></div></div></li>`).join('')}</ol>
   <details class="lesson-context" id="why"><summary>为什么做、学到什么，以及 AI 怎样辅助</summary><div class="markdown-body">${l.html.why}</div><p>练习能力：${l.learn.map(safe).join('、')}</p>${stage?`<p>本阶段行动：${safe(stage.practice)}</p>`:''}${task.reason?`<p>为你推荐：${safe(task.reason)}</p>`:''}${responsibility(task,profile)}<p class="quiet">Cursor 或 Claude Code 任选一个，先核对当期支持条件。限定任务和完成标准，检查差异与实际运行结果。</p></details>
   ${taskMarketContent(task,profile,{compact:true,taskHref})}<a class="task-handoff-link" href="#template" data-scroll="template">按成果模板记录实践 →</a>
@@ -43,6 +51,7 @@ export function learningContent(task,profile,records={},allTasks=[],{taskHref=id
   ${task.id==='code-basics'?`<details class="starter"><summary>打开最小练习输入</summary><pre class="worksheet">${safe('const records = [\n  { id: "r1", project: "A", minutes: 30 },\n  { id: "r2", project: "B", minutes: 20 },\n  { id: "r3", project: "A", minutes: 40 }\n];\n// 在控制台或课程运行环境中，编写只返回项目 A 记录的函数。\n// 先预测结果，再运行；增加空列表和缺字段样例。')}</pre></details>`:''}
   <div class="free-actions"><button class="button small" id="save-worksheet" data-after-save="acceptance">保存草稿，核对成果</button><span class="quiet" id="worksheet-status" role="status">草稿单独保存，不计为验收完成。</span></div>
  </div></details>
+ ${l.cnGate?`<details class="task-section task-block lesson-gate" name="task-panels" id="gates"><summary><span class="section-index">04</span><strong>国内要过哪些关</strong><small>门槛与资质</small></summary><div class="task-block-content"><p class="quiet">本节回答"要查什么、去哪查、查完记哪三件事"。具体条数以你打开时的官方页面为准，这里不代替官方口径。</p><div class="markdown-body">${l.html.cnGate}</div><a class="task-handoff-link" href="#template" data-scroll="template">把查到的结果填进模板 →</a></div></details>`:''}
  <details class="lesson-extra"><summary>需要公司、收款或财税资料，或想改进本页？</summary>${topicsSection(task.id)}${contentActions(l.contentPath)}</details>
  `;
 }
@@ -74,7 +83,7 @@ export function studyPlan(profile,taskList){
 export function taskSearchText(task){
  const l=curriculum[task.id];
  const variants=[adaptLesson(task,{stack:"Python",skills:{frontend:0}}),adaptLesson(task,{stack:"Node.js",skills:{frontend:2}})];
- return [stageSearchText(task),caseSearchText(task),task.title,task.subtitle,task.ai,...task.checks,l.why,l.prerequisite,...l.learn,...l.practice.flatMap(s=>[s.title,s.action,s.result]),l.template,l.example,...l.pitfalls,...l.deliverables,l.next,...variants.flatMap(v=>[...v.readings,...Object.values(v.stepReadings||{}).flat()].flatMap(r=>[r.name,r.chapter,r.goal])),...[...l.readings,...Object.values(l.stepReadings||{}).flat()].flatMap(r=>[r.name,r.chapter,r.goal])].join(' ');
+ return [stageSearchText(task),caseSearchText(task),task.title,task.subtitle,task.ai,...task.checks,l.why,l.prerequisite,l.cnGate||'',l.starter||'',l.prompts||'',l.exemplar||'',...(l.aiBoundary||[]),...l.learn,...l.practice.flatMap(s=>[s.title,s.action,s.result]),l.template,l.example,...l.pitfalls,...l.deliverables,l.next,...variants.flatMap(v=>[...v.readings,...Object.values(v.stepReadings||{}).flat()].flatMap(r=>[r.name,r.chapter,r.goal])),...[...l.readings,...Object.values(l.stepReadings||{}).flat()].flatMap(r=>[r.name,r.chapter,r.goal])].join(' ');
 }
 
 export function searchTasks(allTasks,query){

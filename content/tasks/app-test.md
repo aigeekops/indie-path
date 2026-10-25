@@ -1,6 +1,7 @@
 ---
 id: app-test
 kind: task
+track: reference
 stage: delivery
 order: 41
 case_chapter: 4

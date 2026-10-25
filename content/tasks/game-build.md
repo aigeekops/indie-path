@@ -1,6 +1,7 @@
 ---
 id: game-build
 kind: task
+track: reference
 stage: delivery
 order: 54
 case_chapter: 3

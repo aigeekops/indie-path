@@ -1,6 +1,7 @@
 ---
 id: ai-evaluation
 kind: task
+track: core
 stage: delivery
 order: 27
 case_chapter: 3

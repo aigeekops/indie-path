@@ -1,6 +1,7 @@
 ---
 id: app-store-growth
 kind: task
+track: reference
 stage: acquisition
 order: 43
 case_chapter: 5
@@ -35,6 +36,15 @@ step_readings:
 - 商店搜索意图与详情页表达
 - 曝光、访问、安装和有效使用的事件口径
 - 小规模发布与渠道反馈
+
+## 国内落地门槛
+
+- **每个商店的展示位规则不同**：截图尺寸、关键词、分级、隐私标识都可能在某个商店报错。先按[OPPO](https://open.oppomobile.com/)、[vivo](https://dev.vivo.com.cn/)、[腾讯开放平台](https://open.tencent.com/)各自的后台为准核一遍。
+- **苹果侧先看规范**：商品页与宣传用语的边界在[App 审核指南（中文）](https://developer.apple.com/cn/app-store/review/guidelines/)里写得最清楚，别等被拒。
+- **别把"上架"当成"能推广"**：对外投放、联运、广告位可能涉及额外合作条件，以各商店当期政策为准。
+- **查完记三件事**：各商店的展示素材差异、我被卡在哪个商店、下次要补什么。
+
+**失效信号**：商店素材规范更新、关键词或分级规则变化、后台实际可填字段与文档不一致。
 
 ## 行动步骤
 

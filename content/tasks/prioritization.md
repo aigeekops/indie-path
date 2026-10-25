@@ -1,6 +1,7 @@
 ---
 id: prioritization
 kind: task
+track: core
 stage: operations
 order: 37
 case_chapter: 7

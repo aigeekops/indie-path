@@ -1,6 +1,7 @@
 ---
 id: validation-experiment
 kind: task
+track: core
 stage: discovery
 order: 22
 case_chapter: 1

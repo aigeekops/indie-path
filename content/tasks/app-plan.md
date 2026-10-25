@@ -1,6 +1,7 @@
 ---
 id: app-plan
 kind: task
+track: reference
 stage: design
 order: 38
 case_chapter: 2
@@ -39,6 +40,21 @@ step_readings:
 - 用户设备、目标市场与分发平台分别选择
 - 本地应用和云端应用的必要边界
 - 平台资格、发布成本与变现条件
+
+## 国内落地门槛
+
+国内的每个商店要求都不一样，先按平台逐条查，不要共用一份清单。
+
+- **OPPO**：[OPPO 开放平台](https://open.oppomobile.com/)查资质与上架节点
+- **vivo**：[vivo 开放平台](https://dev.vivo.com.cn/)查发布资料
+- **腾讯渠道**：[腾讯开放平台](https://open.tencent.com/)查开发者注册与发布要求
+- **苹果**：[App 审核指南（中文）](https://developer.apple.com/cn/app-store/review/guidelines/)先看商业模式一节；抽成门槛看[小型企业计划](https://developer.apple.com/cn/app-store/small-business-program/)
+- **提供服务的前提**：能否开展 [App 相关备案](https://www.miit.gov.cn/)，以工信部当期文件为准
+- **著作权材料**：若商店要求，从[中国版权保护中心](https://www.ccopyright.com.cn/)当期页面核对
+
+**查完记三件事**：每个商店的资质清单、我与其他清单不同的地方、我当前缺哪一项。更系统的对照方法见[国内资格门槛对照表](#/task/cn-gates)。
+
+**失效信号**：商店发布政策更新、新增资质要求、开发者后台实际提示与文档不一致。
 
 ## 行动步骤
 

@@ -15,11 +15,11 @@ const saved=task=>({status:'done',criteria:JSON.stringify(task.checks),decision:
 
 test('手机应用贯通六阶段，本地应用不安排网页部署或自建账户支付',()=>{
  const profile=mobile(),route=generateRoute(profile),ids=route.map(task=>task.id),journey=buildJourney({profile});
- assert.equal(tasks.length,56);
+ assert.equal(tasks.length,57);
  assert.equal(stages.length,6);
  assert.equal(stages.find(stage=>stage.id==='monetization').title,'变现与收费');
  for(const id of appIds.filter(id=>id!=='app-cloud'))assert.ok(ids.includes(id),id);
- for(const id of ['web-basics','code-basics','contract','api','ui','auth','verify','ship','reach','charge','support','operate','app-cloud'])assert.ok(!ids.includes(id),id);
+ for(const id of ['web-basics','code-basics','contract','api','ui','auth','verify','usability','ship','reach','charge','operate','app-cloud'])assert.ok(!ids.includes(id),id);
  assert.equal(ids[0],'find');
  assert.ok(ids.indexOf('app-plan')<ids.indexOf('app-build'));
  assert.ok(ids.indexOf('app-test')<ids.indexOf('app-release'));
@@ -71,7 +71,7 @@ test('三个平台独立于国内外市场选择，平台变化要求重新核�
 test('手机任务可手动加入和搜索目录，网页路线加入共用内容实践',()=>{
  const web=blankProfile();
  const webIds=generateRoute(web).map(task=>task.id);
- assert.deepEqual(webIds,['find','scope','price','web-basics','code-basics','contract','api','ui','auth','verify','usability','ship','reach','content-plan','charge','support','content-review','operate']);
+ assert.deepEqual(webIds,['find','segment','evidence','validation-experiment','cn-gates','scope','positioning','landing-page','price','web-basics','code-basics','ui','ai-cost','ai-evaluation','verify','usability','ship','reach','content-plan','charge','support','review','operate','content-review','prioritization']);
  assert.deepEqual(generateRoute({...web,mobilePlatform:'Google Play',mobileData:'需要云端服务'}).map(task=>task.id),webIds);
  const withAdded=generateRoute(mobile(),['app-release','retention','retention','not-a-task']).map(task=>task.id);
  assert.equal(withAdded.filter(id=>id==='app-release').length,1);

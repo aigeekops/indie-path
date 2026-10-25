@@ -1,6 +1,7 @@
 ---
 id: game-test
 kind: task
+track: reference
 stage: delivery
 order: 55
 case_chapter: 4

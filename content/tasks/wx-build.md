@@ -1,6 +1,7 @@
 ---
 id: wx-build
 kind: task
+track: reference
 stage: delivery
 order: 47
 case_chapter: 3

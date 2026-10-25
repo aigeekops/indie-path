@@ -15,7 +15,9 @@ md.renderer.rules.link_open=(tokens,index,options,env,renderer)=>{
 const lessonFields = {
   why:'为什么做', prerequisite:'开始条件', learn:'学习要点', practice:'行动步骤',
   template:'成果模板', example:'教学示例', pitfalls:'常见问题', deliverables:'交付成果',
-  next:'下一步', pathNote:'路径说明', checks:'完成标准', ai:'AI参与方式', taskReason:'推荐原因'
+  next:'下一步', pathNote:'路径说明', checks:'完成标准', ai:'AI参与方式', taskReason:'推荐原因',
+  cnGate:'国内落地门槛',
+  starter:'可运行起点', prompts:'AI提示词包', exemplar:'成品样例', aiBoundary:'AI边界'
 };
 const stageFields = {
   watch:'选读建议', practice:'本轮行动', output:'本轮产出', accept:'完成判断',
@@ -23,6 +25,8 @@ const stageFields = {
 };
 const phaseFields = {learn:'学习要点', practice:'实践步骤', artifact:'成果样例', bad:'不合格示例', checks:'完成标准', branches:'下一步分支'};
 const fail = (file,message) => {throw new Error(`${file}: ${message}`);};
+// 必修主干的规模：一条从经验到第一笔收入的最小闭环，改动需同步 CURRICULUM.md。
+export const CORE_TASK_COUNT = 25;
 const plainText=source=>md.parse(source,{}).filter(t=>t.type==='inline'||t.type==='fence'||t.type==='code_block').map(t=>t.children?t.children.map(c=>c.content).join(''):t.content).join(' ').replace(/\s+/g,' ').trim();
 
 export function sections(source, depth=2) {
@@ -134,7 +138,7 @@ export async function compileContent(root){
     if(['task','variant'].includes(meta.kind)){
       const allowed=new Set([...Object.values(lessonFields),'快速入口']);
       for(const title of Object.keys(mapping(body,file)))if(!allowed.has(title))fail(file,`未知任务章节「${title}」；请使用内容规范中的章节标题`);
-      const lesson=fields(body,file,lessonFields,{lists:['learn','pitfalls','deliverables','checks'],codes:['template'],stepFields:['practice']});
+      const lesson=fields(body,file,lessonFields,{lists:['learn','pitfalls','deliverables','checks','aiBoundary'],codes:['template','starter','prompts'],stepFields:['practice']});
       if(meta.readings)lesson.readings=readings(meta.readings,file);
       if(meta.step_readings){
         if(typeof meta.step_readings!=='object'||Array.isArray(meta.step_readings))fail(file,'step_readings 须按步骤标题指定资料列表');
@@ -150,8 +154,11 @@ export async function compileContent(root){
         for(const key of ['why','prerequisite','learn','practice','template','example','pitfalls','deliverables','next','checks','ai'])if(!lesson[key]?.length)fail(file,`任务缺少「${lessonFields[key]}」`);
         if(!lesson.readings?.length)fail(file,'任务需要参考资料');
         if(!Number.isInteger(meta.order)||!meta.stage)fail(file,'任务需要 order 和 stage');
+        // track 缺省为 reference：新增任务默认进参考区，纳入必修需要显式提升。
+        const track=meta.track??'reference';
+        if(!['core','reference'].includes(track))fail(file,'任务 track 只能是 core 或 reference');
         const {checks,ai,...curriculum}=lesson;
-        const task={id:meta.id,title,subtitle:meta.subtitle,caseChapter:meta.case_chapter,skill:meta.skill??null,effort:meta.effort,stageId:meta.stage,order:meta.order,checks,ai,aiHtml:lesson.html.ai,contentPath:file};
+        const task={id:meta.id,title,subtitle:meta.subtitle,caseChapter:meta.case_chapter,skill:meta.skill??null,effort:meta.effort,stageId:meta.stage,order:meta.order,track,checks,ai,aiHtml:lesson.html.ai,contentPath:file};
         result.tasks.push(task);result.curriculum[meta.id]=curriculum;
         const quick=mapping(body,file)['快速入口'];
         if(quick){const v=mapping(quick,file,3);result.starts.push({id:meta.id,title:v['入口标题'],name:v['模板名称'],description:v['说明'],first:v['开始提示']});}
@@ -209,6 +216,9 @@ export async function compileContent(root){
   if(result.stages.length!==6)throw new Error('主线需要且只能有六个经营阶段');
   for(const stage of result.stages){stage.taskIds=result.tasks.filter(t=>t.stageId===stage.id).map(t=>t.id);if(!stage.taskIds.includes(stage.task))fail(stage.contentPath,'阶段入口不在本阶段');}
   for(const task of result.tasks)if(!result.stages.some(s=>s.id===task.stageId))fail(task.contentPath,'任务所属阶段不存在');
+  const coreIds=result.tasks.filter(t=>t.track==='core').map(t=>t.id);
+  if(coreIds.length!==CORE_TASK_COUNT)throw new Error(`必修任务需要恰好 ${CORE_TASK_COUNT} 项，当前 ${coreIds.length} 项：${coreIds.join(', ')}`);
+  for(const stage of result.stages)if(!result.tasks.some(t=>t.stageId===stage.id&&t.track==='core'))fail(stage.contentPath,'每个阶段至少需要一项必修任务');
   for(const [id,variant]of Object.entries(result.variants))if(!taskIds.has(variant.task))throw new Error(`变体 ${id} 对应任务不存在`);
   for(const lesson of [...Object.values(result.curriculum),...Object.values(result.variants)]){
     const practice=lesson.practice||result.curriculum[lesson.task]?.practice||[];
@@ -236,7 +246,11 @@ export async function compileContent(root){
   result.checkedAt=Object.values(result.readings).map(s=>s.checkedAt).sort().at(-1);
   result.sharedImplementation=shared.implementation;
   result.implementationSamples=Object.fromEntries(Object.values(result.cases).map(c=>[c.id,c.phases[3].artifact]));
-  result.stats={documents:documents.length,tasks:result.tasks.length,stages:result.stages.length,cases:Object.keys(result.cases).length,topics:result.topics.length,sources:Object.keys(result.readings).length};
+  result.coreTaskIds=coreIds;
+  // 起步包四件套：可运行起点、AI 提示词包、成品样例、AI 边界。
+  const kit=id=>{const l=result.curriculum[id]||{};return Boolean(l.starter?.trim()&&l.prompts?.trim()&&l.exemplar?.trim()&&l.aiBoundary?.length);};
+  result.scaffoldedCoreIds=coreIds.filter(kit);
+  result.stats={documents:documents.length,tasks:result.tasks.length,coreTasks:coreIds.length,referenceTasks:result.tasks.length-coreIds.length,scaffoldedCore:result.scaffoldedCoreIds.length,stages:result.stages.length,cases:Object.keys(result.cases).length,topics:result.topics.length,sources:Object.keys(result.readings).length};
   return result;
 }
 

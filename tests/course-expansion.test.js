@@ -10,10 +10,11 @@ const additions={discovery:['segment','alternatives','validation-experiment'],de
 const ids=Object.values(additions).flat();
 test('扩展可从阶段目录进入、搜索和手动加入，内容计划进入默认路线',()=>{
  assert.equal(ids.length,18);
+ const reference=ids.filter(id=>tasks.find(t=>t.id===id).track==='reference');
  for(const profile of [blankProfile(),...personas.map(p=>p.profile)]){
   const before=generateRoute(profile).map(t=>t.id);
   assert.ok(before.includes('content-plan'));
-  assert.ok(!before.some(id=>ids.filter(x=>x!=='content-plan').includes(id)));
+  assert.ok(!before.some(id=>reference.includes(id)));
   const withAdded=generateRoute(profile,ids).map(t=>t.id);
   assert.deepEqual(withAdded.slice(0,before.length),before);
   for(const id of ids)assert.equal(withAdded.filter(x=>x===id).length,1);
@@ -34,7 +35,7 @@ test('扩展可从阶段目录进入、搜索和手动加入，内容计划进�
  }
 });
 
-test('核心课程展示可追溯依据，参考材料不冒充系统推荐',()=>{
+test('有公开评价的课程展示可追溯依据，文档大纲不冒充系统推荐',()=>{
  const html=technicalReadings();
  assert.equal(freeCourses.filter(c=>c.tier==='core').length,4);
  for(const c of freeCourses){
@@ -43,7 +44,9 @@ test('核心课程展示可追溯依据，参考材料不冒充系统推荐',()=
   assert.ok(html.includes(c.html.reason));
   if(c.tier==='core')assert.match(c.html.reason,/<a href="https:/);
  }
- assert.ok(html.includes('核心课程'));assert.ok(html.includes('实操与补充参考'));
+ assert.ok(html.includes('有公开评价的课程'));assert.ok(html.includes('文档与大纲'));
+ // 课程按证据充分程度分组，不与任务的必修 / 参考分级混用同一套说法。
+ assert.ok(!html.includes('>核心课程<'));assert.ok(!html.includes('>实操与补充参考<'));
  assert.equal(freeCourses.find(c=>c.name.includes('CS146S')).tier,'reference');
  assert.match(curriculum['ai-cost'].prerequisite,/可能收费|按量计费/);
 });

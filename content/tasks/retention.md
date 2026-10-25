@@ -1,6 +1,7 @@
 ---
 id: retention
 kind: task
+track: reference
 stage: operations
 order: 36
 case_chapter: 7

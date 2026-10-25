@@ -1,6 +1,7 @@
 ---
 id: contract
 kind: task
+track: reference
 stage: delivery
 order: 6
 case_chapter: 3

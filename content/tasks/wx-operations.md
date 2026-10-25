@@ -1,6 +1,7 @@
 ---
 id: wx-operations
 kind: task
+track: reference
 stage: operations
 order: 52
 case_chapter: 7

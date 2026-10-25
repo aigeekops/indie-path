@@ -1,6 +1,7 @@
 ---
 id: auth
 kind: task
+track: reference
 stage: delivery
 order: 12
 case_chapter: 3

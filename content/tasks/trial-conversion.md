@@ -1,6 +1,7 @@
 ---
 id: trial-conversion
 kind: task
+track: reference
 stage: monetization
 order: 34
 case_chapter: 6
@@ -29,6 +30,15 @@ step_readings:
 - 试用漏斗与观察窗口
 - 使用失败和购买拒绝
 - 付款流程与提醒
+
+## 国内落地门槛
+
+- **试用转付费的入口要合规**：App 内的付费入口与虚拟商品表述受平台约束，对照[App 审核指南（中文）](https://developer.apple.com/cn/app-store/review/guidelines/)的商业模式一节逐条核；微信产品还要按[小游戏运营规范](https://developers.weixin.qq.com/minigame/product/)检查引导用语。
+- **退款与投诉按渠道查**：支付宝侧看[开放平台](https://open.alipay.com/)的能力说明，微信侧看商户平台的退款相关文档，把"用户要求退款时我怎么办"写成一句话。
+- **付费失败要能归因**：先分清是"我的权限没开通"还是"用户拒付"，前者回到[国内资格门槛对照表](#/task/cn-gates)复核。
+- **查完记三件事**：付费入口在哪、失败最常见的一种原因、页面查询日期。
+
+**失效信号**：平台付费条款更新、退款渠道规则变化、收款能力提示与实际不符。
 
 ## 行动步骤
 

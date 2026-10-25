@@ -1,6 +1,7 @@
 ---
 id: sales-demo
 kind: task
+track: reference
 stage: acquisition
 order: 32
 case_chapter: 5

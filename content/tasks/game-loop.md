@@ -1,6 +1,7 @@
 ---
 id: game-loop
 kind: task
+track: reference
 stage: design
 order: 53
 case_chapter: 2

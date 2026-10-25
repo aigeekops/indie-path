@@ -14,8 +14,8 @@ test('五类用户及网页、应用、小程序共用内容实践，归入地�
    const profile={...base,form},route=generateRoute(profile,['content-plan','content-review']);
    const ids=route.map(t=>t.id),acquisition=ids.findIndex(id=>['reach','app-store-growth','wx-growth'].includes(id));
    const operation=ids.findIndex(id=>['operate','app-operations','wx-operations'].includes(id));
-   assert.equal(ids[acquisition+1],'content-plan');
-   assert.equal(ids[operation-1],'content-review');
+   assert.ok(ids.indexOf('content-plan')>acquisition,'内容实践排在首批获客之后');
+   assert.ok(ids.indexOf('content-review')>operation,'内容复盘排在经营实践之后');
    assert.equal(ids.filter(id=>id==='content-plan').length,1);
    assert.equal(ids.filter(id=>id==='content-review').length,1);
    const journey=buildJourney({profile});

@@ -1,6 +1,7 @@
 ---
 id: wx-growth
 kind: task
+track: reference
 stage: acquisition
 order: 50
 case_chapter: 5

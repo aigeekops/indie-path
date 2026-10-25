@@ -1,6 +1,7 @@
 ---
 id: content-review
 kind: task
+track: core
 stage: operations
 order: 80
 case_chapter: 7

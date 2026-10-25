@@ -1,6 +1,7 @@
 ---
 id: reach
 kind: task
+track: core
 stage: acquisition
 order: 16
 case_chapter: 5
