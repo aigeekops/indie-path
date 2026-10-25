@@ -1,0 +1,58 @@
+name: Verify source links
+
+# 死链与核验时效检查。外部站点偶发不可达不算本仓库的问题，因此这里只报告、不阻断合并。
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'content/sources/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sources-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'scheduled' }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Collect changed sources
+        id: changed
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags --depth=1 origin "+refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}"
+          files=$(git diff --name-only --diff-filter=AM "origin/${{ github.base_ref }}...HEAD" -- content/sources | xargs -n1 basename 2>/dev/null | tr '\n' ' ')
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+      - name: Probe source links
+        id: probe
+        continue-on-error: true
+        run: |
+          if [ -n "${{ steps.changed.outputs.files }}" ]; then
+            node scripts/verify-sources.mjs --markdown ${{ steps.changed.outputs.files }} > report.md
+          else
+            node scripts/verify-sources.mjs --markdown > report.md
+          fi
+      - name: Write job summary
+        if: always()
+        run: |
+          if [ -f report.md ]; then cat report.md >> "$GITHUB_STEP_SUMMARY"; else echo '没有生成核验报告。' >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-verification
+          path: report.md
+          if-no-files-found: warn

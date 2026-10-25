@@ -20,7 +20,8 @@
     "content": "node scripts/build-content.mjs",
     "precheck": "npm run content",
     "pretest": "npm run content",
-    "dev": "node scripts/dev.mjs"
+    "dev": "node scripts/dev.mjs",
+    "sources": "node scripts/verify-sources.mjs"
   },
   "devDependencies": {
     "markdown-it": "15.0.3",
