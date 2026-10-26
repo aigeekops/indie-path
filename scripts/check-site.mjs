@@ -7,6 +7,9 @@ for(const rel of files){
  if(rel.endsWith('.js')){
   const check=spawnSync(process.execPath,['--check',path.join(root,rel)],{encoding:'utf8'});
   if(check.status!==0)throw new Error(check.stderr||`语法检查失败: ${rel}`);
+  // generated/ 是构建产物（数据文件），任务正文里的代码示例会被正则误当成真实导入。
+  // 语法检查仍然执行；导入路径只检查手写的浏览器模块。
+  if(rel.startsWith('generated/'))continue;
   const js=await readFile(path.join(root,rel),'utf8');
   for(const m of js.matchAll(/(?:import|export)\s+[^;]*?from\s*['"]([^'"]+)['"]/g)){
    if(!m[1].startsWith('./'))throw new Error(`浏览器模块必须使用本地相对路径: ${rel} -> ${m[1]}`);
